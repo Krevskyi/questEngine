@@ -7,7 +7,6 @@ import ua.ithillel.evo.questengine.data.entity.User;
 import ua.ithillel.evo.questengine.data.repository.UserRepository;
 import ua.ithillel.evo.questengine.exception.NotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,10 +26,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
     public List<User> getAll() {
-        List<User> users = new ArrayList<>();
-        this.userRepository.findAll().forEach(users::add);
-        return users;
+        return (List<User>) userRepository.findAll();
     }
 
     @Override
@@ -39,7 +41,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void delete(User user) {
-        this.userRepository.delete(user);
+    public void deleteById(Long id) {
+        this.userRepository.deleteById(id);
     }
 }

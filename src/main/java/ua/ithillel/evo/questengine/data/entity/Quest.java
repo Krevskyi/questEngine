@@ -6,7 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,25 +27,27 @@ public class Quest {
     @Setter(AccessLevel.NONE)
     private Long id;
 
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "app_user_id")
+    @JsonIgnore
+    private User author;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    private Type type;
-
-    @Column(name = "general")
-    private Boolean general;
-
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Stage> stages = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "app_user_id")
-    @JsonIgnore
-    private User user;
+    @Column(name = "tags")
+//    @Enumerated(EnumType.STRING)
+    private Set<Tag> tags = new HashSet<>();
+
+    @Column(name = "public")
+    private Boolean availableToPublic;
+
+
 }

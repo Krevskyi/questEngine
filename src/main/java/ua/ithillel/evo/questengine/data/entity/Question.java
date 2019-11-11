@@ -17,8 +17,8 @@ import java.util.List;
 @ToString
 @Builder
 @Entity
-@Table(name = "stage")
-public class Stage {
+@Table(name = "question")
+public class Question {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -26,8 +26,13 @@ public class Stage {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @Column(name = "position")
-    private Integer position;
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "quest_id")
+    @JsonIgnore
+    private Quest quest;
+
+//    @Column(name = "position")
+//    private Integer position;
 
     @Column(name = "question")
     private String question;
@@ -35,27 +40,22 @@ public class Stage {
     @Column(name = "answer")
     private String answer;
 
-    @Column(name = "start_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+//    @Column(name = "start_time")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date startTime;
 
-    @Column(name = "duration")
-    @Temporal(TemporalType.TIME)
-    private Date duration;
-
-    @Column(name = "successfully")
-    private Boolean successfully;
-
-    @Column(name = "completed")
-    private Boolean completed;
+//    @Column(name = "duration")
+//    @Temporal(TemporalType.TIME)
+//    private Date duration;
+//
+//    @Column(name = "successfully")
+//    private Boolean successfully;
+//
+//    @Column(name = "completed")
+//    private Boolean completed;
 
     @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Hint> hints = new ArrayList<>();
-
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "quest_id")
-    @JsonIgnore
-    private Quest quest;
 
 }
