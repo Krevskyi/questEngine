@@ -7,15 +7,11 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
-@ToString
-@Builder
+@Data
 @Entity
-@Table(name = "hint")
+@Builder
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Hint {
 
     @Id
@@ -25,11 +21,10 @@ public class Hint {
     private Long id;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "stage_id")
+    @JoinColumn(name = "question_id")
     @JsonIgnore
     private Question question;
 
-    @Column(name = "duration")
     @Temporal(TemporalType.TIMESTAMP)
     private Date countdown;
 

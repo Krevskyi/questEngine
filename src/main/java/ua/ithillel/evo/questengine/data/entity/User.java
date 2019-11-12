@@ -8,14 +8,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
-@ToString
-@Builder
+@Data
 @Entity
+@Builder
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Table(name = "app_user")
 public class User {
 
@@ -25,13 +22,12 @@ public class User {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @Column(name = "email", unique = true)
+    @Column(unique = true)
     private String email;
 
-    @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Quest> quests = new HashSet<>();
 

@@ -6,18 +6,13 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
-@ToString
-@Builder
+@Data
 @Entity
-@Table(name = "question")
+@Builder
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Question {
 
     @Id
@@ -31,30 +26,11 @@ public class Question {
     @JsonIgnore
     private Quest quest;
 
-//    @Column(name = "position")
-//    private Integer position;
-
-    @Column(name = "question")
     private String question;
 
-    @Column(name = "answer")
     private String answer;
 
-//    @Column(name = "start_time")
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Date startTime;
-
-//    @Column(name = "duration")
-//    @Temporal(TemporalType.TIME)
-//    private Date duration;
-//
-//    @Column(name = "successfully")
-//    private Boolean successfully;
-//
-//    @Column(name = "completed")
-//    private Boolean completed;
-
-    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Hint> hints = new ArrayList<>();
 

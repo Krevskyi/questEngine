@@ -2,6 +2,7 @@ package ua.ithillel.evo.questengine.service.implemented;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.ithillel.evo.questengine.data.dao.HintDAO;
 import ua.ithillel.evo.questengine.data.dao.QuestionDAO;
 import ua.ithillel.evo.questengine.data.entity.Hint;
@@ -11,6 +12,7 @@ import ua.ithillel.evo.questengine.service.HintService;
 import java.util.List;
 
 @Service
+@Transactional
 public class HintServiceImpl implements HintService {
 
     private HintDAO hintDAO;
@@ -37,7 +39,7 @@ public class HintServiceImpl implements HintService {
         Question question = questionDAO.findById(questionId).orElse(null);//todo
         question.getHints().add(hint);
         hint.setQuestion(question);
-//        questionDAO.save(question);
+        questionDAO.save(question);//or hintDAO.save(hint)
     }
 
     @Override

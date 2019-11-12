@@ -2,6 +2,7 @@ package ua.ithillel.evo.questengine.service.implemented;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.ithillel.evo.questengine.data.dao.QuestDAO;
 import ua.ithillel.evo.questengine.data.dao.UserDAO;
 import ua.ithillel.evo.questengine.data.entity.Quest;
@@ -11,6 +12,7 @@ import ua.ithillel.evo.questengine.service.QuestService;
 import java.util.List;
 
 @Service
+@Transactional
 public class QuestServiceImpl implements QuestService {
 
     private QuestDAO questDAO;
@@ -37,7 +39,7 @@ public class QuestServiceImpl implements QuestService {
         User user = userDAO.findById(userId).orElse(null);//todo
         user.getQuests().add(quest);
         quest.setAuthor(user);
-//        userDAO.save(user);
+        userDAO.save(user);//or questDAO.save(quest)
     }
 
     @Override
