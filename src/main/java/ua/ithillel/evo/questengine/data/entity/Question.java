@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -26,12 +27,12 @@ public class Question {
     @JsonIgnore
     private Quest quest;
 
-    private String question;
+    private String text;
 
     private String answer;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Hint> hints = new ArrayList<>();
+    private List<Hint> hints = new LinkedList<>();
 
 }

@@ -25,8 +25,7 @@ public class Hint {
     @JsonIgnore
     private Question question;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date countdown;
+    private Integer countdown;
 
     @Column(name = "hint_text")
     private String hintText;
