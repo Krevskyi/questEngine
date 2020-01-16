@@ -1,7 +1,9 @@
 package ua.ithillel.evo.questengine.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,22 +12,14 @@ import java.util.Set;
 
 @Data
 @Entity
-@Builder
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Table(name = "app_user")
-public class User {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class AppUser {
 
     @Id
+    @Setter(AccessLevel.NONE)
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Setter(AccessLevel.NONE)
     private Long id;
-
-    @Column(unique = true)
-    private String email;
-
-    private String password;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -34,5 +28,4 @@ public class User {
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JsonIgnore
 //    private Set<Game> games = new HashSet<>();
-
 }

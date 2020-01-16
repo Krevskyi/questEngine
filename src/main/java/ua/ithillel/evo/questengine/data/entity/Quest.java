@@ -3,6 +3,8 @@ package ua.ithillel.evo.questengine.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import ua.ithillel.evo.questengine.data.entity.task.TextQuestion;
+import ua.ithillel.evo.questengine.data.entity.app_user.Player;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 @Entity
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Quest {
 
@@ -24,7 +27,7 @@ public class Quest {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "app_user_id")
     @JsonIgnore
-    private User author;
+    private AppUser author;
 
     private String name;
 
@@ -32,7 +35,7 @@ public class Quest {
 
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Question> questions = new ArrayList<>();
+    private List<TextQuestion> questions = new ArrayList<>();
 
     @Column(name = "public")
     private Boolean availableToPublic;

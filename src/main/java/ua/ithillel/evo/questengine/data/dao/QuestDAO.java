@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface QuestDAO {
 
-    Optional<Quest> findById(Long id);
+    Quest findById(Long id);
 
     List<Quest> getAll();
 

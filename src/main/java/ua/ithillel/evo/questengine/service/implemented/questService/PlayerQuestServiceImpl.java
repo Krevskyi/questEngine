@@ -1,27 +1,28 @@
-package ua.ithillel.evo.questengine.service.implemented;
+package ua.ithillel.evo.questengine.service.implemented.questService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ithillel.evo.questengine.data.dao.AppUserDAO;
 import ua.ithillel.evo.questengine.data.dao.QuestDAO;
-import ua.ithillel.evo.questengine.data.dao.UserDAO;
+import ua.ithillel.evo.questengine.data.dao.PlayerDAO;
 import ua.ithillel.evo.questengine.data.entity.Quest;
-import ua.ithillel.evo.questengine.data.entity.User;
+import ua.ithillel.evo.questengine.data.entity.app_user.Player;
 import ua.ithillel.evo.questengine.service.QuestService;
 
 import java.util.List;
 
 @Service
 @Transactional
-public class QuestServiceImpl implements QuestService {
+public class PlayerQuestServiceImpl implements QuestService<Player> {
 
     private QuestDAO questDAO;
-    private UserDAO userDAO;
+    private PlayerDAO playerDAO;
 
     @Autowired
-    public QuestServiceImpl(QuestDAO questDAO, UserDAO userDAO) {
+    public PlayerQuestServiceImpl(QuestDAO questDAO, PlayerDAO userDAO) {
         this.questDAO = questDAO;
-        this.userDAO = userDAO;
+        this.playerDAO = userDAO;
     }
 
     @Override
@@ -36,10 +37,10 @@ public class QuestServiceImpl implements QuestService {
 
     @Override
     public void createQuestByUser(Long userId, Quest quest) {
-        User user = userDAO.findById(userId).orElse(null);//todo
+        Player user = playerDAO.findById(userId);
         user.getQuests().add(quest);
         quest.setAuthor(user);
-        userDAO.save(user);//or questDAO.save(quest)
+        playerDAO.save(user);//or questDAO.save(quest)
     }
 
     @Override

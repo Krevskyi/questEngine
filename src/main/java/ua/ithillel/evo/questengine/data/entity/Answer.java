@@ -5,16 +5,14 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Question {
+public class Answer {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -23,16 +21,11 @@ public class Question {
     private Long id;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "quest_id")
+    @JoinColumn(name = "task_id")
     @JsonIgnore
-    private Quest quest;
+    private Task task;
 
     private String text;
 
-    private String answer;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Hint> hints = new LinkedList<>();
-
+    private Boolean isCorrect;
 }

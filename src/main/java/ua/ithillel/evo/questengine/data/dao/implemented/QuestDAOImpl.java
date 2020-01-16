@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import ua.ithillel.evo.questengine.data.dao.QuestDAO;
 import ua.ithillel.evo.questengine.data.entity.Quest;
 import ua.ithillel.evo.questengine.data.repository.QuestRepository;
+import ua.ithillel.evo.questengine.exception.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class QuestDAOImpl implements QuestDAO {
@@ -15,13 +15,14 @@ public class QuestDAOImpl implements QuestDAO {
     private QuestRepository questRepository;
 
     @Autowired
-    public QuestDAOImpl(QuestRepository questRepository) {
-        this.questRepository = questRepository;
+    public QuestDAOImpl(QuestRepository repository) {
+        this.questRepository = repository;
     }
 
     @Override
-    public Optional<Quest> findById(Long id) {
-        return questRepository.findById(id);
+    public Quest findById(Long id) {
+        return questRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override
